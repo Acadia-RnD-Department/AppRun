@@ -7,8 +7,8 @@ Before=multi-user.target
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/
-ExecStart=/usr/local/sbin/apprun.sh /usr/local/AppRun/me.hysong.services.apprundropin.apprun
+WorkingDirectory=/opt/aisp/homes/root
+ExecStart=/usr/local/sbin/apprun.sh /opt/aisp/sys/services/com.acadia.aisp.services.apprundropin.apprun
 
 [Install]
 WantedBy=multi-user.target

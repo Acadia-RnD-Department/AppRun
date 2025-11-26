@@ -11,7 +11,7 @@ CONFIG = {
     "BaseDirectory": "/home",
     "ApplicationsDirectory": "applications",
     "ProbingIntervalSeconds": 3,
-    "GlobalApplicationProbeTargets": ["/applications", "/opt/applications"],
+    "GlobalApplicationProbeTargets": ["/applications", "/opt/applications", "/opt/aisp/sys/applications", "/opt/aisp/applications"],
     # Where to persist registry of bundle->desktop links
     "RegistryDir": "/var/lib/apprun",
     "RegistryFile": "desktop-links.json",
@@ -144,7 +144,6 @@ def generate_desktop_entry(property_dict: dict[str, str]) -> str:
     # Replace any still-unset placeholders with empty strings
     # (prevents literal $Key$ leakage)
     # Identify placeholders in Template by dollar markers
-
     # for frag in ["Version", "Name", "Comment", "BundlePath", "Icon", "Terminal", "Type", "Categories"]:
     #     desktop_entry_content = desktop_entry_content.replace(f"${frag}$", "")
     # return desktop_entry_content

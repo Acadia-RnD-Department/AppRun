@@ -13,5 +13,7 @@ if [[ -f /tmp/DoNotEnableAppRunDropInService ]]; then
     exit 0
 fi
 
-systemctl enable /usr/local/AppRun/me.hysong.services.apprundropin.apprun/me.hysong.services.apprundropin.service
-systemctl start me.hysong.services.apprundropin.service
+
+/usr/local/sbin/apprun-prepare.sh "/opt/aisp/services/com.acadia.aisp.services.apprundropin.apprun"
+systemctl enable /opt/aisp/services/com.acadia.aisp.services.apprundropin.apprun/com.acadia.aisp.services.apprundropin.service
+systemctl start com.acadia.aisp.services.apprundropin.service

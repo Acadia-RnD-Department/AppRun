@@ -20,5 +20,5 @@ if [ -L /usr/local/bin/dictionary ]; then
     rm /usr/local/bin/dictionary
 fi
 
-systemctl stop me.hysong.services.apprundropin.service
-systemctl disable me.hysong.services.apprundropin.service
+systemctl stop com.acadia.aisp.services.apprundropin.service
+systemctl disable com.acadia.aisp.services.apprundropin.service
