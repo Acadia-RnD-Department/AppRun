@@ -8,7 +8,7 @@ Before=multi-user.target
 Type=simple
 User=root
 WorkingDirectory=/opt/aisp/homes/root
-ExecStart=/usr/local/sbin/apprun.sh /opt/aisp/sys/services/com.acadia.aisp.services.apprundropin.apprun
+ExecStart=/usr/local/sbin/apprun.sh /opt/aisp/services/com.acadia.aisp.services.apprundropin.apprun
 
 [Install]
 WantedBy=multi-user.target
