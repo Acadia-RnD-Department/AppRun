@@ -18,7 +18,7 @@ start_time=$(date +%s)
 exit_code=9
 
 if [ -f "$cmd/main.py" ]; then
-    BOX_PATH="$(getent passwd $(whoami) | cut -f6 -d:)/.local/apprun/boxes"
+    BOX_PATH="$(getent passwd "$(whoami)" | cut -f6 -d:)/.local/apprun/boxes"
     mkdir -p "$BOX_PATH/pycache"
     export PYTHONPYCACHEPREFIX="$BOX_PATH/pycache"
     if [[ -f "$cmd/libs" ]]; then
@@ -27,7 +27,6 @@ if [ -f "$cmd/main.py" ]; then
         export PYTHONPATH="$(/usr/bin/python3 /usr/local/sbin/dictionary.py --dict-collection=apprun-python --string="$(cat "$cmd/AppRunMeta/libs")"):$PYTHONPATH" 
     fi
     if [[ -f "$cmd/AppRunMeta/EnforceRootLaunch" ]]; then
-        options=""
         if [[ -f "$cmd/AppRunMeta/KeepEnvironment" ]]; then
             sudo -E "$BOX_PATH/$(/usr/local/sbin/appid.sh "$cmd")/pyvenv/bin/python3" "$cmd/main.py" "$@"
             exit_code=$?
@@ -88,7 +87,7 @@ end_time=$(date +%s)
 duration=$((end_time - start_time))
 
 # If bundle type is application, do time based crash detection
-if [[ "$(/usr/local/sbin/apprunutil.sh GetProperty "$cmd" "DesktopLink/Type")" -ne "Application" ]]; then
+if [[ "$(/usr/local/sbin/apprunutil.sh GetProperty "$cmd" "DesktopLink/Type")" != "Application" ]]; then
     exit 0
 fi
 
