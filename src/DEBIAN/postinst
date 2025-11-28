@@ -15,5 +15,4 @@ fi
 
 
 /usr/local/sbin/apprun-prepare.sh "/opt/aisp/services/com.acadia.aisp.services.apprundropin.apprun"
-systemctl enable /opt/aisp/services/com.acadia.aisp.services.apprundropin.apprun/com.acadia.aisp.services.apprundropin.service
-systemctl start com.acadia.aisp.services.apprundropin.service
+/opt/aisp/sys/sbin/services.sh enable com.acadia.aisp.services.apprundropin

@@ -4,5 +4,5 @@ Section: misc
 Priority: optional
 Architecture: all
 Maintainer: LKS410
-Depends: python3, python3-venv, libnotify-bin
+Depends: python3, python3-venv, libnotify-bin, python3-pyinotify
 Description: -
