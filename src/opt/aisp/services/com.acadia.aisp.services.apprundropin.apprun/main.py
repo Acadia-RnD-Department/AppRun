@@ -149,7 +149,7 @@ def generate_desktop_entry(property_dict: dict[str, str]) -> str:
 
     fallbacks = {
         "Version": "1.0", "Comment": "", "Args": "",
-        "Icon.png": "/usr/local/AppRun/unknown-app-icon.png",
+        "Icon.png": "/usr/share/AppRun/unknown-app-icon.png",
         "Terminal": "false", "Type": "Application", "Categories": "Utility"
     }
     for frag, default_value in fallbacks.items():

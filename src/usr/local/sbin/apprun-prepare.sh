@@ -9,7 +9,7 @@ fi
 
 if [[ -d "$1" ]]; then
     if [[ ! -f "$1/main.py" ]] && [[ ! -f "$1/main.sh" ]] && [[ ! -f "$1/main.jar" ]] && [[ ! -x "$1/main" ]]; then
-        notify-send "[AppRun] App Preparation Failed" "No valid entry file found in $1"
+        notify-send "[AppRun] App Preparation Failed" "No valid entry file found in $1" --icon="/usr/share/AppRun/apprun.png"
         echo "No main.py, main.sh, main.jar, or executable main file found in $1. Skipping preparation."
         exit 9
     fi
@@ -37,24 +37,32 @@ if [ -f "$1/main.py" ]; then
 
         new_checksum=$(md5sum "$1/requirements.txt" | awk '{ print $1 }')
 
+        # Check if app bundle contains AppRunMeta/DesktopLink/Icon.png file. If so, use it as icon for notifications.
+        # Otherwise, use /usr/share/AppRun/unknown-app-icon.png
+        if [ -f "$1/AppRunMeta/DesktopLink/Icon.png" ]; then
+            icon_path="$1/AppRunMeta/DesktopLink/Icon.png"
+        else
+            icon_path="/usr/share/AppRun/unknown-app-icon.png"
+        fi
+
         if [[ "$old_checksum" == "" ]]; then
             echo "First time setup, installing dependencies..."
             echo "Running preinstallation..."
-            notify-send "[AppRun] Installing Dependencies" "Installing dependencies for $appid. This may take a while."
+            notify-send "[AppRun] Installing Dependencies" "Installing dependencies for $appid. This may take a while." --icon="$icon_path"
             "$appBoxRoot/$appid/pyvenv/bin/python3" -m pip install --upgrade pip setuptools wheel
             "$appBoxRoot/$appid/pyvenv/bin/python3" -m pip install -r "$1/requirements.txt"
             echo "$new_checksum" > "$appBoxRoot/$appid/requirements.txt.checksum"
-            notify-send "[AppRun] Dependencies Installed" "Dependencies for $appid have been installed."
+            notify-send "[AppRun] Dependencies Installed" "Dependencies for $appid have been installed." --icon="$icon_path"
         elif [[ "$old_checksum" != "$new_checksum" ]]; then
             echo "Requirements file changed, reinstalling dependencies..."
-            notify-send "[AppRun] Updating Dependencies" "Dependencies for $appid have changed. Reinstalling. This may take a while."
+            notify-send "[AppRun] Updating Dependencies" "Dependencies for $appid have changed. Reinstalling. This may take a while." --icon="$icon_path"
             rm -rf "$appBoxRoot/$appid/pyvenv"
             python3 -m venv "$appBoxRoot/$appid/pyvenv"
             echo "Running preinstallation..."
             "$appBoxRoot/$appid/pyvenv/bin/python3" -m pip install --upgrade pip setuptools wheel
             "$appBoxRoot/$appid/pyvenv/bin/python3" -m pip install -r "$1/requirements.txt"
             echo "$new_checksum" > "$appBoxRoot/$appid/requirements.txt.checksum"
-            notify-send "[AppRun] Dependencies Updated" "Dependencies for $appid have been updated."
+            notify-send "[AppRun] Dependencies Updated" "Dependencies for $appid have been updated." --icon="$icon_path"
         fi
     fi
 fi
