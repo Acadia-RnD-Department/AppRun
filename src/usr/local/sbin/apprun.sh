@@ -91,12 +91,24 @@ if [[ "$(/usr/local/sbin/apprunutil.sh GetProperty "$cmd" "DesktopLink/Type")" !
     exit 0
 fi
 
+# Check if argument has "--AppRunParam:EnableNoCrashDetectionForShortRunning" to disable crash detection for short running apps
+nocheck_short_run="false"
+for arg in "$@"; do
+    if [[ "$arg" == "--AppRunParam:EnableNoCrashDetectionForShortRunning" ]]; then
+        nocheck_short_run="true"
+        break
+    fi
+done
+
 # If duration is less than 1 second, assume a crash and prompt graphical message
 if [[ $duration -lt 1 ]] || [[ $exit_code -ne 0 ]]; then
     message="The application terminated too quickly, which may indicate a crash immediately after launch. Please check the application logs or run the application in a terminal for more details."
 
     if [[ $exit_code -ne 0 ]]; then
         message="The application has exited with a non-zero exit code ($exit_code). Please check the application logs, or run the application in a terminal for more details."
+    elif [[ "$nocheck_short_run" == "true" ]]; then
+        # If no crash detection for short running apps is enabled, do not show any message
+        exit 0
     fi
 
     echo "AppRun: $message"
