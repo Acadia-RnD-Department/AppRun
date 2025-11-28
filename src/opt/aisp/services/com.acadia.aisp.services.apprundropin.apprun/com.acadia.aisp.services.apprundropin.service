@@ -1,14 +1,12 @@
 [Unit]
 Description=AppRun DropIn Service
-DefaultDependencies=no
-After=local-fs.target
-Before=multi-user.target
+After=graphical.target systemd-user-sessions.service
 
 [Service]
 Type=simple
 User=root
 WorkingDirectory=/opt/aisp/services/
-ExecStart=/usr/local/sbin/apprun.sh /opt/aisp/services/com.acadia.aisp.services.apprundropin.apprun
+ExecStart=/usr/local/sbin/apprun.sh /opt/aisp/services/com.acadia.aisp.services.apprundropin.apprun --backend polling
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=graphical.target
