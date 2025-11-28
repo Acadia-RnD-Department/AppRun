@@ -78,7 +78,7 @@ elif [ -x "$cmd/main" ]; then
         exit_code=$?
     fi
 else
-    echo "No valid main file found to execute."
+    echo "No valid main file found to execute at $cmd."
     exit 10
 fi
 
